@@ -11,7 +11,7 @@ import (
 )
 
 type json struct {
-	Fields string `json:"doubleValue"` {
+	Fields struct {
 		Lat struct {
 			DoubleValue string `json:"doubleValue"`
 		}
