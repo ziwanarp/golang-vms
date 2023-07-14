@@ -8,30 +8,14 @@ import (
 	"cloud.google.com/go/firestore"
 	firebase "firebase.google.com/go"
 	"github.com/gin-gonic/gin"
+	mainmodel "github.com/ziwanarp/vms-go/models"
 	"google.golang.org/api/option"
 	"google.golang.org/genproto/googleapis/type/latlng"
 )
 
-type json struct {
-	Fields struct {
-		GeoPoint struct {
-			latlng.LatLng
-		}
-		St struct {
-			BooleanValue bool `json:"booleanValue"`
-		}
-		Vel struct {
-			DoubleValue float32 `json:"doubleValue"`
-		}
-		Ts struct {
-			StringValue string `json:"stringValue"`
-		}
-	}
-}
-
 func Post(c *gin.Context) {
 
-	var data json
+	var data mainmodel.Receipt
 
 	//bind data body ke var struct
 	if err := c.ShouldBindJSON(&data); err != nil {
@@ -65,7 +49,7 @@ func Post(c *gin.Context) {
 	}
 }
 
-func updateDoc(ctx context.Context, client *firestore.Client, data *json, lokasi *latlng.LatLng) bool {
+func updateDoc(ctx context.Context, client *firestore.Client, data *mainmodel.Receipt, lokasi *latlng.LatLng) bool {
 
 	_, err := client.Collection("DataPerusahaan").Doc("ntsClone").Collection("DaftarKendaraan").Doc("IDKendaraan_001").Update(ctx, []firestore.Update{
 		{
@@ -88,6 +72,7 @@ func updateDoc(ctx context.Context, client *firestore.Client, data *json, lokasi
 	if err != nil {
 		// Handle any errors in an appropriate way, such as returning them.
 		log.Printf("An error has occurred: %s", err)
+		return false
 	}
 
 	return true
