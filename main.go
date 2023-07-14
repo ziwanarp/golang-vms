@@ -7,13 +7,15 @@ import (
 
 func main() {
 
+	
+
 	router := gin.Default()
 
-	router.GET("/api/get", func(c *gin.Context) {
-		c.JSON(200, gin.H{
-			"message": "200 OK",
-		})
-	})
+	// router.GET("/api/get", func(c *gin.Context) {
+	// 	c.JSON(200, gin.H{
+	// 		"message": "200 OK",
+	// 	})
+	// })
 
 	router.POST("/api/post", maincontroller.Post)
 
